@@ -1,4 +1,6 @@
-# memory-tracker
+# OS project 2: memory-tracker
+
+11810935
 
 ## Project Background and Description
 
@@ -68,3 +70,6 @@ Under this structure, the detect principle is just out there, when try to read/w
 
 ## Division of labor
 
+A complete procedure for reporting a potential memory problem is divided into three steps including statistics collection and organization, data analysis as well as problem detection.  It is expected that the three members in our group play different roles in one problem reporting procedure and change their task in the next turn for another problem. At the same time, verification and packing of our work should be finished together to guarantee the correctness and consistency of our project.
+
+Last but not the least, the division of labor can be adjusted flexibly according to the real situation and cooperation between group members is greatly appreciated.
