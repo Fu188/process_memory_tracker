@@ -1,6 +1,10 @@
-# OS project 2: memory-tracker
+# OS project 2: process-memory-tracker
 
-11810935
+11810935 Lan Lu
+
+11811127 Ziyue Zhou
+
+11812202 Weibao Fu
 
 ## Project Background and Description
 
