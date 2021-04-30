@@ -70,7 +70,7 @@ Its structure implementation creates two global map, `valid-value map` and `vali
 
 Under this structure, the detect principle is just out there, when try to read/write any byte in the memory, it first check the valid-address bit of the byte, if it is invalid, then report read/write error. Whenever some byte is loaded into the CPU, its relevant valid-value bits is loaded into the core (which we can treat it as a virtual CPU environment). Thus, whenever the value in the register is used to create memory address or may affect the output of the program, then `Memcheck` will check the valid-value bits, if it indicates that it is not valid/not initialized it will report error.
 
-`Valgrind` has a mature implementation, we are still digging into the specific way of implement our version of memory tracker, its structure seems very inspiring and worth referencing. We might merge its basic implementation and our own implementation thoughts later.
+`Valgrind` has a mature implementation, we are still digging into the specific way of implement our version of memory tracker, its structure seems very inspiring and worth referencing. We might merge its basic implementation and our own innovative implementation thoughts later to realize a light-weight and more user friendly product.
 
 ## Division of labor
 
