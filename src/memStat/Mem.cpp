@@ -2,12 +2,18 @@
 # include <fstream>
 # include <cstring>
 
-# include "Mem.h"
-# include "utils.h"
+# include "Mem.hpp"
+# include "utils.hpp"
 
 using namespace std;
 
-void getCurMemInfo(){
+long MemInfo::m_total;
+long MemInfo::m_free;
+long MemInfo::m_buffers;
+long MemInfo::m_cached;
+long MemInfo::m_used;
+
+void MemInfo::getCurMemInfo(){
     fstream statFile ("/proc/meminfo", ios_base::in);
 
     if (statFile.fail()) {
@@ -24,16 +30,16 @@ void getCurMemInfo(){
 
         /* The key we are looking for */
         if ( key == "MemTotal:" ) {
-            getInteger(statFile, MemInfo::m_total);
+            getInteger(statFile, m_total);
         } else if ( key == "MemFree:" ) {
-            getInteger(statFile, MemInfo::m_free);
+            getInteger(statFile, m_free);
         } else if ( key == "Buffers:" ) {
-            getInteger(statFile, MemInfo::m_buffers);
+            getInteger(statFile, m_buffers);
         } else if ( key == "Cached:" ) {
-            getInteger(statFile, MemInfo::m_cached);
+            getInteger(statFile, m_cached);
         }
         clearLine(statFile);
     }
 
-    MemInfo::m_used = MemInfo::m_total - MemInfo::m_free -MemInfo::m_buffers - MemInfo::m_cached;
+    m_used = m_total - m_free -m_buffers - m_cached;
 }

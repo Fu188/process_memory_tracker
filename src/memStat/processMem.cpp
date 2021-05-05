@@ -6,18 +6,11 @@
 # include <dirent.h>
 # include <vector>
 
-# include "processMem.h"
-# include "Mem.h"
-# include "utils.h"
+# include "processMem.hpp"
+# include "Mem.hpp"
+# include "utils.hpp"
 
 using namespace std;
-
-bool isProcess(string str){
-    for (int i = 0; i<str.size(); i++) {
-        if (!isdigit(str[i])) return false;
-    }
-    return true;
-}
 
 void getProcessList(string path, vector<string>& processList){
     DIR *pDir;
@@ -67,4 +60,11 @@ void getProcessInfo(string pid, struct processMemInfo* info) {
 void getUtilization(struct processMemInfo* info) {
     info->vmsize_per = (info->vmsize * 100.0) / TOTAL_VM_SIZE;
     info->vmrss_per = (info->vmrss * 100.0) / MemInfo::m_total;
+}
+
+bool isProcess(string str){
+    for (int i = 0; i<str.size(); i++) {
+        if (!isdigit(str[i])) return false;
+    }
+    return true;
 }

@@ -16,7 +16,9 @@ public:
     static long m_used;
 
 public:
-    void getCurMemInfo();
+    static void getCurMemInfo();
 };
 
-# endif;
+
+
+# endif
