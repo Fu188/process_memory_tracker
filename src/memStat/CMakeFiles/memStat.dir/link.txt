@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/memStat.dir/main.cpp.o CMakeFiles/memStat.dir/Mem.cpp.o CMakeFiles/memStat.dir/processMem.cpp.o CMakeFiles/memStat.dir/utils.cpp.o  -o memStat 
