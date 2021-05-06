@@ -22,11 +22,35 @@ utils.hpp
 string
 -
 
+/home/fwb/process_memory_tracker/src/memStat/display.cpp
+iostream
+-
+string
+-
+vector
+-
+processMem.hpp
+/home/fwb/process_memory_tracker/src/memStat/processMem.hpp
+display.hpp
+/home/fwb/process_memory_tracker/src/memStat/display.hpp
+
+/home/fwb/process_memory_tracker/src/memStat/display.hpp
+string
+-
+processMem.hpp
+/home/fwb/process_memory_tracker/src/memStat/processMem.hpp
+
 /home/fwb/process_memory_tracker/src/memStat/main.cpp
 iostream
 -
 vector
 -
+unistd.h
+-
+csignal
+-
+display.hpp
+/home/fwb/process_memory_tracker/src/memStat/display.hpp
 Mem.hpp
 /home/fwb/process_memory_tracker/src/memStat/Mem.hpp
 processMem.hpp
@@ -46,6 +70,10 @@ cstdlib
 dirent.h
 -
 vector
+-
+cmath
+-
+algorithm
 -
 processMem.hpp
 /home/fwb/process_memory_tracker/src/memStat/processMem.hpp
@@ -67,10 +95,14 @@ string
 -
 utils.hpp
 /home/fwb/process_memory_tracker/src/memStat/utils.hpp
+processMem.hpp
+/home/fwb/process_memory_tracker/src/memStat/processMem.hpp
 
 /home/fwb/process_memory_tracker/src/memStat/utils.hpp
 iostream
 -
 string
 -
+processMem.hpp
+/home/fwb/process_memory_tracker/src/memStat/processMem.hpp
 

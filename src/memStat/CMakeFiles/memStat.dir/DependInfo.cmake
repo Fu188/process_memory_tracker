@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/fwb/process_memory_tracker/src/memStat/Mem.cpp" "/home/fwb/process_memory_tracker/src/memStat/CMakeFiles/memStat.dir/Mem.cpp.o"
+  "/home/fwb/process_memory_tracker/src/memStat/display.cpp" "/home/fwb/process_memory_tracker/src/memStat/CMakeFiles/memStat.dir/display.cpp.o"
   "/home/fwb/process_memory_tracker/src/memStat/main.cpp" "/home/fwb/process_memory_tracker/src/memStat/CMakeFiles/memStat.dir/main.cpp.o"
   "/home/fwb/process_memory_tracker/src/memStat/processMem.cpp" "/home/fwb/process_memory_tracker/src/memStat/CMakeFiles/memStat.dir/processMem.cpp.o"
   "/home/fwb/process_memory_tracker/src/memStat/utils.cpp" "/home/fwb/process_memory_tracker/src/memStat/CMakeFiles/memStat.dir/utils.cpp.o"

@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const __int64_t TOTAL_VM_SIZE = (0xffffffffffffffff);
+const __uint64_t TOTAL_VM_SIZE = (0xffffffffffffffff);
 
 class MemInfo {
 public:

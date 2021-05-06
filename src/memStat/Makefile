@@ -150,6 +150,33 @@ Mem.cpp.s:
 	$(MAKE) -f CMakeFiles/memStat.dir/build.make CMakeFiles/memStat.dir/Mem.cpp.s
 .PHONY : Mem.cpp.s
 
+display.o: display.cpp.o
+
+.PHONY : display.o
+
+# target to build an object file
+display.cpp.o:
+	$(MAKE) -f CMakeFiles/memStat.dir/build.make CMakeFiles/memStat.dir/display.cpp.o
+.PHONY : display.cpp.o
+
+display.i: display.cpp.i
+
+.PHONY : display.i
+
+# target to preprocess a source file
+display.cpp.i:
+	$(MAKE) -f CMakeFiles/memStat.dir/build.make CMakeFiles/memStat.dir/display.cpp.i
+.PHONY : display.cpp.i
+
+display.s: display.cpp.s
+
+.PHONY : display.s
+
+# target to generate assembly for a file
+display.cpp.s:
+	$(MAKE) -f CMakeFiles/memStat.dir/build.make CMakeFiles/memStat.dir/display.cpp.s
+.PHONY : display.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -243,6 +270,9 @@ help:
 	@echo "... Mem.o"
 	@echo "... Mem.i"
 	@echo "... Mem.s"
+	@echo "... display.o"
+	@echo "... display.i"
+	@echo "... display.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

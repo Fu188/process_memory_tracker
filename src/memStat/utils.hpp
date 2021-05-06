@@ -1,8 +1,10 @@
-#ifndef UTILS_H
-#define UTILS_H
+# ifndef UTILS_H
+# define UTILS_H
 
-#include <iostream>
-#include <string>
+# include <iostream>
+# include <string>
+
+# include "processMem.hpp"
 
 using namespace std;
 
@@ -15,5 +17,8 @@ template<typename T> void getInteger(istream& stream, T& info) {
 	stream >> value;
     info = stoi(value);
 }
+
+/* get the corresponding state */
+void getState(istream& stream, ProcessState& info);
 
 #endif

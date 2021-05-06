@@ -3,9 +3,15 @@
 
 CMakeFiles/memStat.dir/Mem.cpp.o: Mem.cpp
 CMakeFiles/memStat.dir/Mem.cpp.o: Mem.hpp
+CMakeFiles/memStat.dir/Mem.cpp.o: processMem.hpp
 CMakeFiles/memStat.dir/Mem.cpp.o: utils.hpp
 
+CMakeFiles/memStat.dir/display.cpp.o: display.cpp
+CMakeFiles/memStat.dir/display.cpp.o: display.hpp
+CMakeFiles/memStat.dir/display.cpp.o: processMem.hpp
+
 CMakeFiles/memStat.dir/main.cpp.o: Mem.hpp
+CMakeFiles/memStat.dir/main.cpp.o: display.hpp
 CMakeFiles/memStat.dir/main.cpp.o: main.cpp
 CMakeFiles/memStat.dir/main.cpp.o: processMem.hpp
 
@@ -14,6 +20,7 @@ CMakeFiles/memStat.dir/processMem.cpp.o: processMem.cpp
 CMakeFiles/memStat.dir/processMem.cpp.o: processMem.hpp
 CMakeFiles/memStat.dir/processMem.cpp.o: utils.hpp
 
+CMakeFiles/memStat.dir/utils.cpp.o: processMem.hpp
 CMakeFiles/memStat.dir/utils.cpp.o: utils.cpp
 CMakeFiles/memStat.dir/utils.cpp.o: utils.hpp
 

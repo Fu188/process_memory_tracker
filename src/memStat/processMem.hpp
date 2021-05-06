@@ -6,19 +6,35 @@
 
 using namespace std;
 
-struct processMemInfo {
+/* Define the state of each process */
+enum ProcessState {RUNNING, SLEEPING, IDLE, ZOMBIE, WAITING, STOPPED};
+static const string ProcessStateString[] = {"RUNNING", "SLEEPING", "IDLE", "ZOMBIE", "WAITING", "STOPPED"};
+
+/* define the info of each process */
+typedef struct {
     string name;
-    string state;
+    ProcessState state;
     int pid;
     long vmsize;
-    int vmsize_per;
+    float vmsize_per;
     long vmrss;
-    int vmrss_per;
-};
+    float vmrss_per;
+} processMemInfo;
+
+vector<processMemInfo> getAllMemStat();
+vector<processMemInfo> getMemStatByPid();
+vector<processMemInfo> getMemStatByState();
+vector<processMemInfo> getMemStatByVmsize();
+vector<processMemInfo> getMemStatByVmrss();
 
 bool isProcess(string str);
 void getProcessList(string path, vector<string>& processList);
-void getProcessInfo(string pid, struct processMemInfo* info);
-void getUtilization(struct processMemInfo* info);
+void getProcessInfo(string pid, vector<processMemInfo>& processMemInfoList);
+void getUtilization(processMemInfo* info);
+
+bool MemCmpPid(const processMemInfo& a,const processMemInfo& b);
+bool MemCmpState(const processMemInfo& a,const processMemInfo& b);
+bool MemCmpVmsize(const processMemInfo& a,const processMemInfo& b);
+bool MemCmpVmrss(const processMemInfo& a,const processMemInfo& b);
 
 # endif

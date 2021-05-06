@@ -9,4 +9,5 @@ add_executable(${PROJECT_NAME}
         Mem.cpp
         processMem.cpp
         utils.cpp
+        display.cpp
         )
