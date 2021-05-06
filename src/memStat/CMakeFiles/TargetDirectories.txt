@@ -1,3 +1,0 @@
-/home/fwb/process_memory_tracker/src/memStat/CMakeFiles/rebuild_cache.dir
-/home/fwb/process_memory_tracker/src/memStat/CMakeFiles/memStat.dir
-/home/fwb/process_memory_tracker/src/memStat/CMakeFiles/edit_cache.dir
