@@ -5,9 +5,9 @@
 # include "processMem.hpp"
 # include "display.hpp"
 
-const float MEMSAFE = 0.5;
-const float MEMDANGER = 2;
-
+const float MEMSAFE = 10;
+const float MEMWARN = 20;
+const float MEMDANGER = 30;
 
 int checkArgs(int displayNum, int sortRegulation) {
     if (displayNum < 1 || displayNum > 20) {
@@ -70,6 +70,8 @@ void displayMemoryInfo(processMemInfo info){
     if (info.vmrss_per > MEMDANGER) {
         setFlash();
         BGColor = BG_RED;
+    } else if (info.vmrss_per > MEMWARN) {
+        BGColor = BG_RED;
     } else if (info.vmrss_per > MEMSAFE) {
         BGColor = BG_YELLOW;
     } else {
@@ -78,6 +80,7 @@ void displayMemoryInfo(processMemInfo info){
 
     setBackGroundColor(BGColor);
     setForeGoundColor(FGColor);
+    moveCursorLineHead();
 
     printf ("%7d%15s%15s%15d%15d%10f%10f",
             info.pid, info.name.c_str(), ProcessStateString[info.state].c_str(), 
@@ -105,6 +108,7 @@ void setFlash() {
     printf(FLASH.c_str());
     fflush(stdout);
 }
+
 void resetDisplay() {
     printf(RESET.c_str());
     fflush(stdout);
@@ -113,7 +117,6 @@ void resetDisplay() {
 void clearScreen() {
     system("clear");
 }
-
 
 void moveCursorLineHead() {
     printf("\r");
@@ -129,6 +132,7 @@ void hideCursor() {
     printf("\033[?25l");
     fflush(stdout);
 }
+
 void UpCursor(int up) {
     printf("\033[%dA", up);
     fflush(stdout);

@@ -49,6 +49,8 @@ unistd.h
 -
 csignal
 -
+utils.hpp
+/home/fwb/process_memory_tracker/src/memStat/utils.hpp
 display.hpp
 /home/fwb/process_memory_tracker/src/memStat/display.hpp
 Mem.hpp
@@ -95,6 +97,8 @@ string
 -
 utils.hpp
 /home/fwb/process_memory_tracker/src/memStat/utils.hpp
+display.hpp
+/home/fwb/process_memory_tracker/src/memStat/display.hpp
 processMem.hpp
 /home/fwb/process_memory_tracker/src/memStat/processMem.hpp
 

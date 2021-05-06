@@ -21,4 +21,7 @@ template<typename T> void getInteger(istream& stream, T& info) {
 /* get the corresponding state */
 void getState(istream& stream, ProcessState& info);
 
+/* handler exception */
+void clearAndExit(int signum);
+
 #endif

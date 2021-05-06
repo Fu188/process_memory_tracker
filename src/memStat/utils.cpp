@@ -2,6 +2,7 @@
 # include <string>
 
 # include "utils.hpp"
+# include "display.hpp"
 # include "processMem.hpp"
 
 using namespace std;
@@ -24,4 +25,10 @@ void getState(istream& stream, ProcessState& info) {
         case 'D': { info = WAITING; break; }
         case 'I': { info = IDLE; break; }
     }
+}
+
+void clearAndExit(int signum) {
+    clearScreen();
+    showCursor();
+    exit(signum);
 }

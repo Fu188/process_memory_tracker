@@ -3,21 +3,18 @@
 # include <unistd.h>
 # include <csignal>
 
+# include "utils.hpp"
 # include "display.hpp"
 # include "Mem.hpp"
 # include "processMem.hpp"
 
 using namespace std;
 
-void signalHandler(int signum) {
-    clearScreen();
-    showCursor();
-    exit(signum);
-}
-
 int main(int argc, char *argv[]) {
     /* register exception function */
-    signal(SIGINT, signalHandler);
+    signal(SIGINT, clearAndExit);
+    signal(SIGQUIT, clearAndExit);
+    signal(SIGTSTP, clearAndExit);
 
     int displayNum = 10;
     int sortRegulation = 1;
@@ -61,5 +58,6 @@ int main(int argc, char *argv[]) {
         sleep(1);
     }
 
+    clearAndExit(0);
     return 0;
 }
