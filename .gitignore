@@ -1,6 +1,7 @@
 !CMakeLists.txt
 !Makefile
 CMakeFiles/
+*.so
 *.o
 *.out
 *.cmake
