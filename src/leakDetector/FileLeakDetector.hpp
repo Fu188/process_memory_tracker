@@ -30,4 +30,6 @@ void remove_file_info(int fd, const char * file, unsigned int line);
 void insert_leak(File_info fd_info);
 void delete_leak(int pos);
 
+void file_report();
+
 # endif

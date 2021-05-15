@@ -113,6 +113,7 @@ void delete_leak(int pos) {
         unsigned int i = pos - 1;
         while (i--) fd_info = fd_info->next;
         close_info = fd_info->next;
+        fd_info->next = close_info->next;
 
         if (leak_next == close_info) {
             leak_next = fd_info;
@@ -121,4 +122,21 @@ void delete_leak(int pos) {
 
     free(close_info);
     leak_info.num --;
+}
+
+void file_report() {
+    File_leak * leak_item;
+    FILE *f = fopen(FILENAME.c_str(), "a");
+    if (f!=NULL) {
+        fprintf(f, "   File Descriptor Leak Summary\n");
+        fprintf(f, "-----------------------------------\n");
+        fprintf(f, "Leak total: %d\n\n", leak_info.num);
+        
+        for (leak_item = leak_start; leak_item!= NULL; leak_item = leak_item->next) {
+            fprintf(f, "File Descriptor: %d\nFile Name: %s\nLine: %d\n", 
+                leak_item->file_info.fd, leak_item->file_info.file_name.c_str(), leak_item->file_info.line);
+            fprintf(f, "-----------------------------------\n");
+        }
+        fclose(f);
+    }
 }

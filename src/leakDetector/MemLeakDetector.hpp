@@ -34,4 +34,6 @@ void remove_mem_info(void * mem_ref, const char * file, unsigned int line);
 void insert_leak(Mem_info alloc_info);
 unsigned int delete_leak(unsigned int pos);
 
+void mem_report();
+
 # endif

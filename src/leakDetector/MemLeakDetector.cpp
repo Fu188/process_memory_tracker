@@ -147,6 +147,7 @@ unsigned int delete_leak(unsigned int pos) {
         unsigned int i = pos - 1;
         while (i--) alloc_info = alloc_info->next;
         free_info = alloc_info->next;
+        alloc_info->next = free_info->next;
 
         if (leak_next == free_info) {
             leak_next = alloc_info;
@@ -159,3 +160,22 @@ unsigned int delete_leak(unsigned int pos) {
     leak_info.num --;
     return free_size;
 }
+
+void mem_report() {
+    Mem_leak * leak_item;
+    FILE *f = fopen(FILENAME.c_str(), "a");
+    if (f!=NULL) {
+        fprintf(f, "       Memory Leak Summary\n");
+        fprintf(f, "-----------------------------------\n");
+        fprintf(f, "Leak Total Num: %d, Leak Total Size: %u Bytes\n", leak_info.num, leak_info.total_memory);
+        fprintf(f, "Max used: %u Bytes, Once Max: %u Bytes\n\n", leak_info.used_max, leak_info.once_max);
+        
+        for (leak_item = leak_start; leak_item!= NULL; leak_item = leak_item->next) {
+            fprintf(f, "Address: 0x%8x\nSize: %u Bytes\n", leak_item->mem_info.address, leak_item->mem_info.size);
+            fprintf(f, "File Name: %s\nLine: %u\n", leak_item->mem_info.file_name.c_str(), leak_item->mem_info.line);
+            fprintf(f, "-----------------------------------\n");
+        }
+        fclose(f);
+    }
+}
+
