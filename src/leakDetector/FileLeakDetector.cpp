@@ -139,4 +139,18 @@ void file_report() {
         }
         fclose(f);
     }
+    file_clear();
+    MUTEX_DESTROY(leak_info.mutex);
+}
+
+void file_clear() {
+	File_leak * leak_item = leak_start;
+	File_leak * open_info = leak_start;
+
+	while(open_info != NULL) 
+	{
+		open_info = open_info->next;
+		free(leak_item);
+		leak_item = open_info;
+	}
 }

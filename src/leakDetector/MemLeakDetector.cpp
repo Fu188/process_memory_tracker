@@ -177,5 +177,19 @@ void mem_report() {
         }
         fclose(f);
     }
+    mem_clear();
+    MUTEX_DESTROY(leak_info.mutex);
+}
+
+void mem_clear() {
+	Mem_leak * leak_item = leak_start;
+	Mem_leak * alloc_info = leak_start;
+
+	while(alloc_info != NULL) 
+	{
+		alloc_info = alloc_info->next;
+		free(leak_item);
+		leak_item = alloc_info;
+	}
 }
 

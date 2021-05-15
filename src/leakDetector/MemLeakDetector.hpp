@@ -35,5 +35,6 @@ void insert_leak(Mem_info alloc_info);
 unsigned int delete_leak(unsigned int pos);
 
 void mem_report();
+void mem_clear();
 
 # endif

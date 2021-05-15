@@ -31,5 +31,6 @@ void insert_leak(File_info fd_info);
 void delete_leak(int pos);
 
 void file_report();
+void file_clear();
 
 # endif
