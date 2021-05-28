@@ -6,3 +6,4 @@ CMakeFiles/
 *.out
 *.cmake
 CMakeCache.txt
+*.idea
