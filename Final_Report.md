@@ -16,7 +16,7 @@
 
 1. **Collect real-time memory usage statistics from every existed process**
 
-   ![image-20210529212546199](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529212546199.png)
+   ![image-20210529212546199](C:\Users\17124\Desktop\Final_Report.assets\image-20210529212546199.png)
    
    It collect real-time memory usage statistic and list it as a terminal output above
    
@@ -30,11 +30,11 @@
    
    if   20>`%VMRSS` >10, it is considered as cross the `MEMSAFE` line , then the row item appears as yellow
    
-   ![image-20210529224834154](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529224834154.png)
+   ![image-20210529224834154](C:\Users\17124\Desktop\Final_Report.assets\image-20210529224834154.png)
    
    if  30 > `%VMRSS` >20,  it is considered as cross the `MEMWARN` line , then the row item appears as red
    
-   ![image-20210529224854710](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529224854710.png)
+   ![image-20210529224854710](C:\Users\17124\Desktop\Final_Report.assets\image-20210529224854710.png)
 
 ​       if   `%VMRSS` >30,  it is considered as cross the `MEMDANGER` line , then the row item appears as red and keeps flashing. (since it is dynamic, it cannot be shown in the report)
 
@@ -44,19 +44,19 @@
 
    Sorted by `PID` (`-s0`):
 
-   ![image-20210529212621761](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529212621761.png)
+   ![image-20210529212621761](C:\Users\17124\Desktop\Final_Report.assets\image-20210529212621761.png)
 
    Sorted by `VMRSS`(`-s1`):
 
-   ![image-20210529212721167](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529212721167.png)
+   ![image-20210529212721167](C:\Users\17124\Desktop\Final_Report.assets\image-20210529212721167.png)
 
    Sorted by `VMSIZE`(`-s2`):
 
-   ![image-20210529212749904](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529212749904.png)
+   ![image-20210529212749904](C:\Users\17124\Desktop\Final_Report.assets\image-20210529212749904.png)
 
    Sorted by `STATE`(`-s2`):
 
-   ![image-20210529212827323](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529212827323.png)
+   ![image-20210529212827323](C:\Users\17124\Desktop\Final_Report.assets\image-20210529212827323.png)
 
    ```
    RUNNING > SLEEPING > IDLE > ZOMBIE > WAITING > STOPPED
