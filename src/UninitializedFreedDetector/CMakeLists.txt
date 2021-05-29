@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
 add_executable(${PROJECT_NAME}
-        checkMem.cpp
+        checkAssign.cpp
         ../leakDetector/MemLeakDetector.cpp
         ../leakDetector/FileLeakDetector.cpp
         ../memStat/display.cpp

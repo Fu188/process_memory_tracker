@@ -220,6 +220,7 @@ vector<Mem_info> getAllMemLeak(){
                 if(f!=NULL) {
                     int mode = 0;
                     void *address;
+                    int numTen = 0;
                     unsigned int size;
                     string file_name;
                     unsigned int line;
@@ -241,8 +242,10 @@ vector<Mem_info> getAllMemLeak(){
                             break;
                         str.erase(remove(str.begin(), str.end(), '\n'), str.end());
                         if (str.size() > 7) {
-                            if (str.substr(0, 7) == "Address")
-                                address = (void *) (atoi(str.substr(11, 8).c_str()));
+                            if (str.substr(0, 7) == "Address"){
+                                numTen = strtoull(str.substr(9).c_str(), NULL, 16);
+                                address = (void*) numTen;
+                            }
                             else if (str.substr(0, 4) == "File") {
                                 file_name = str.substr(6);
                             } else if (str.substr(0, 4) == "Line") {

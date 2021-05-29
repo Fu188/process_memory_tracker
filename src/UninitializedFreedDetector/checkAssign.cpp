@@ -80,6 +80,8 @@ void UpCursor(int up) {
 string FILEPATHRECORD = "../leakDetector/Output";
 vector<Mem_info> memAllocatedGlobal;
 vector<Mem_info> memFreedGlobal;
+vector<File_info> fileOpenedGlobal;
+vector<File_info> fileClosedGlobal;
 
 void updateMemStat(){
     vector<Mem_info> memAllocated;
@@ -166,6 +168,85 @@ void updateMemStat(){
     memFreedGlobal = memFreed;
 }
 
+void updateFileStat(){
+    vector<File_info> fileOpened;
+    vector<File_info> fileClosed;
+    DIR* dir = opendir(FILEPATHRECORD.c_str());
+    dirent* p = NULL;
+    string format = "_File.txt";
+    while((p = readdir(dir)) != NULL)
+    {
+        if(p->d_name[0] != '.')
+        {
+            string name = FILEPATHRECORD + "/" + string(p->d_name);
+            if(strstr(name.c_str(), format.c_str()) != NULL){
+                FILE *f = fopen(name.c_str(), "r");
+                if(f!=NULL) {
+                    int mode = 0;
+                    int fd;
+                    string file_name;
+                    unsigned int line;
+                    time_t start;
+
+                    string str = "";
+                    char in[100];
+                    while (NULL != fgets(in, 99, f)) {
+                        if (in[0] == '\n')
+                            continue;
+                        str = in;
+                        if (str == "[Open File]\n") {
+                            mode = 1;
+                            continue;
+                        } else if (str == "[Close File]\n") {
+                            mode = -1;
+                            continue;
+                        } else if (str == "   File Descriptor Leak Summary\n")
+                            break;
+                        str.erase(remove(str.begin(), str.end(), '\n'), str.end());
+
+                        if (str.substr(0, 5) == "File:")
+                            file_name = str.substr(6);
+                        else if (str.substr(0, 5) == "File ") {
+                            fd = atoi(str.substr(17).c_str());
+                        } else if (str.substr(0, 4) == "Line") {
+                            line = atoi(str.substr(6).c_str());
+                        } else if (str.substr(0, 5) == "Start") {
+                            start = atol(str.substr(7).c_str());
+                            if (mode == 1) {
+                                File_info file_info;
+                                memset(&file_info, 0, sizeof(file_info) );
+                                file_info.file_name = file_name;
+                                file_info.fd = fd;
+                                file_info.line = line;
+                                file_info.start = start;
+                                fileOpened.push_back(file_info);
+                            } else if (mode == -1) {
+                                int find = -1;
+                                for (int i = 0; i < fileOpened.size(); i++) {
+                                    if (fileOpened[i].fd == fd) {
+                                        find = i;
+                                        break;
+                                    }
+                                }
+                                if (find > -1){
+                                    fileClosed.push_back(fileOpened[i]);
+                                    fileOpened.erase(fileOpened.begin() + find);
+                                }
+                            }
+                        }
+
+                    }
+                    fclose(f);
+                }
+            }
+        }
+    }
+    closedir(dir);
+    fileClosedGlobal = fileClosed;
+    fileOpenedGlobal = fileOpened;
+
+}
+
 vector<Mem_info> getAllMemAllocated(){
     updateMemStat();
     return memAllocatedGlobal;
@@ -187,7 +268,7 @@ template<typename T> void checkAssignMem(T* address){
         lower = *((int *)(&mem.address));
         upper = *((int *)(&mem.address)) + mem.size -1;
         if(lower<=start && upper >= start+size-1){
-            printf("%15s%20s  0x%08x\n","Memory", "Success    ", address);
+            printf("%15s%20s%5s0x%08x\n","Memory", "Success","",address);
             resetDisplay();
             return;
         }
@@ -197,15 +278,40 @@ template<typename T> void checkAssignMem(T* address){
         lower = *((int *)&mem.address);
         upper = *((int *)&mem.address) + mem.size -1;
         if(lower<=start && upper >= start+size-1){
-            printf("%15s%20s  0x%08x\n","Memory", "Already Freed", address);
+            printf("%15s%20s%5s0x%08x\n","Memory", "Already Freed","",address);
             resetDisplay();
             return;
         }
     }
-    printf("%15s%20s  0x%08x\n","Memory", "Uninitialized", address);
+    printf("%15s%20s%5s0x%08x\n","Memory", "Uninitialized","",address);
     resetDisplay();
     return;
 }
+
+void checkAssignFile(int fd){
+    File_info file;
+    updateFileStat();
+    for(int i = 0; i < fileOpenedGlobal.size(); i++){
+        file = fileOpenedGlobal[i];
+        if(file.fd == fd){
+            printf("%15s%20s%15d\n","File", "Opened",fd);
+            resetDisplay();
+            return;
+        }
+    }
+    for(int i = 0; i < fileClosedGlobal.size(); i++){
+        file = fileClosedGlobal[i];
+        if(file.fd == fd){
+            printf("%15s%20s%15d\n","File", "Already Closed",fd);
+            resetDisplay();
+            return;
+        }
+    }
+    printf("%15s%20s%15d\n","File", "not Accessed", fd);
+    resetDisplay();
+    return;
+}
+
 
 int main(){
     BackGroundColor BGColor = BG_BLACK;
@@ -214,19 +320,26 @@ int main(){
     setFontBold();
     setBackGroundColor(BGColor);
     setForeGoundColor(FGColor);
-    printf("%15s%12s        %11s    \n", "CLASS", "TYPE", "ADDRESS");
+    printf("%15s%20s%15s\n", "CLASS", "TYPE", "ADDRESS");
     resetDisplay();
     int index = 5;
     void* ptr[index];
+    int p[index+1];
+    p[6] = 1000;
     while(index --) {
         ptr[index] = malloc( sizeof(int) );
+        p[index] = open("../test/test_file.cpp",0);
     }
     checkAssignMem(ptr[5]);
+    checkAssignFile(p[5]);
     sleep(2);
     free(ptr[2]);
     checkAssignMem(ptr[2]);
+    close(p[2]);
+    checkAssignFile(p[2]);
     sleep(2);
     checkAssignMem(ptr[3]);
+    checkAssignFile(p[3]);
     mem_report();
     file_report();
     return 0;

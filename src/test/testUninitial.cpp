@@ -16,8 +16,7 @@ using namespace std;
 
 int main() {
     int * ptr = (int*)malloc(10*sizeof(int));
-    ptr[10] = 5;
-    checkAssign();
     mem_report();
     file_report();
+    ptr[10] = 5;
 }

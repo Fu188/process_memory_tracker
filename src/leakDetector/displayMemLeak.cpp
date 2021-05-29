@@ -53,8 +53,8 @@ void displayTitleMemLeak(){
     setFontBold();
     setBackGroundColor(BGColor);
     setForeGoundColor(FGColor);
-    printf ("%15s%15s%15s%15s",
-            "NAME-MEM","LINE","SIZE","TIME");
+    printf ("%15s%15s%15s%15s%15s",
+            "NAME-MEM","LINE","SIZE","TIME","ADDRESS");
     resetDisplay();
     printf("\n");
 }
@@ -90,8 +90,8 @@ void displayMemoryLeak(Mem_info leak, time_t second){
     moveCursorLineHead();
 
 //    info.name[10] = '\0';
-    printf ("%15s%15d%15d%15lld",
-            leak.file_name.c_str(), leak.line, leak.size, second);
+    printf ("%15s%15d%15d%15lld     0x%08x",
+            leak.file_name.c_str(), leak.line, leak.size, second,leak.address);
     resetDisplay();
     printf("\n");
 }
