@@ -16,11 +16,13 @@
 
 1. **Collect real-time memory usage statistics from every existed process**
 
-   ![image-20210529154634580](Final_Report.assets/image-20210529154634580.png)
+   ![image-20210529212546199](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529212546199.png)
    
-   It collect real-time memory usage statistic and list it as a table above
+   It collect real-time memory usage statistic and list it as a terminal output above
    
-   Each row in a table represents a process with its `PID`, `NAME` , `STATE` , `VMSIZE` , `VMRSS` , `%VMSIZE` , `%VMRSS`
+   First two lines are the memory analysis result in total, including `Total Memory` , `Used Memory` , `Cached Memory` and `Free Memoy`
+   
+   Following is a table for statistic for each process. Each row in a table represents a process with its `PID`, `NAME` , `STATE` , `VMSIZE` , `VMRSS` , `%VMSIZE` , `%VMRSS`
    
    It also gives a real-time warning over the parameter `%VMRSS`
    
@@ -28,11 +30,13 @@
    
    if   20>`%VMRSS` >10, it is considered as cross the `MEMSAFE` line , then the row item appears as yellow
    
+   ![image-20210529224834154](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529224834154.png)
+   
    if  30 > `%VMRSS` >20,  it is considered as cross the `MEMWARN` line , then the row item appears as red
+   
+   ![image-20210529224854710](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529224854710.png)
 
-​       if   `%VMRSS` >30,  it is considered as cross the `MEMDANGER` line , then the row item appears as red and keeps flashing.
-
-
+​       if   `%VMRSS` >30,  it is considered as cross the `MEMDANGER` line , then the row item appears as red and keeps flashing. (since it is dynamic, it cannot be shown in the report)
 
 2. **Rank and display memory usage statistics.**
 
@@ -40,29 +44,50 @@
 
    Sorted by `PID` (`-s0`):
 
-   ![image-20210529154709324](Final_Report.assets/image-20210529154709324.png)
+   ![image-20210529212621761](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529212621761.png)
 
    Sorted by `VMRSS`(`-s1`):
 
-   ![image-20210529154800401](Final_Report.assets/image-20210529154800401.png)
+   ![image-20210529212721167](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529212721167.png)
 
    Sorted by `VMSIZE`(`-s2`):
 
-   ![image-20210529154850622](Final_Report.assets/image-20210529154850622.png)
+   ![image-20210529212749904](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529212749904.png)
 
-   Sorted by `STATE`:
+   Sorted by `STATE`(`-s2`):
 
-   ![image-20210529154943789](Final_Report.assets/image-20210529154943789.png)
+   ![image-20210529212827323](C:\Users\17124\AppData\Roaming\Typora\typora-user-images\image-20210529212827323.png)
 
    ```
-RUNNING > SLEEPING > IDLE > ZOMBIE > WAITING > STOPPED
+   RUNNING > SLEEPING > IDLE > ZOMBIE > WAITING > STOPPED
    ```
-   
+
    
 
    ***For a test program like this:***
 
-   ![image-20210529152928026](Final_Report.assets/image-20210529152928026.png)
+   ```cpp
+   using namespace std;
+   
+   int main() {
+       int index = 5;
+       int p[5];
+       void * ptr[5];
+       while(index --) {
+           p[index] = open("test_file.cpp",0);
+           ptr[index]=malloc(32*index);
+           sleep(2);
+       }
+       close(p[2]);
+       free(ptr[1]);
+       sleep(2);
+       close(p[3]);
+       free(ptr[4]);
+       sleep(2);
+       mem_report();
+       file_report();
+   }
+   ```
 
    ***Here are the following result analysis according to the test:***
 
@@ -129,15 +154,9 @@ RUNNING > SLEEPING > IDLE > ZOMBIE > WAITING > STOPPED
 
    
 
-6. **Pack the above features together as our final memory tracker.**
-
-   The above feature is packed together as the final memory tracker:
-
-   ![image-20210529161749972](Final_Report.assets/image-20210529161749972.png)
-
 #### 2) More Advanced goals acheived:
 
- 1. Made a file descriptor leak summary report:
+ 1. **Made a file descriptor leak summary report:**
 
     ![image-20210529162327310](Final_Report.assets/image-20210529162327310.png)
 
@@ -155,23 +174,21 @@ RUNNING > SLEEPING > IDLE > ZOMBIE > WAITING > STOPPED
     Line: <The line that causes the leakage happens>
     ```
 
-	2. Visualize memory report real time detection:
-
-#TODO
-
-
-
-
+	2. **Display memory/file leakage real time detection statistic in terminal:**
+	
+	   
 
 #### 3) Goals that are not implemented and its difficulties:
 
-1. Detect and alert potential memory overflow or underflow especially caused by read and write.
-2. Detect and alert use on uninitialized memory.
-3. Detect and alert read and write operations on memory after it has been freed.
-4. Detect and alert use on memory beyond the allocated size.
-5. Detect and alert invalid access to heap and stack.
+1. Detect and alert use on uninitialized memory.
 
+2. Detect and alert read and write operations on memory after it has been freed.
 
+3. Detect and alert use on memory beyond the allocated size.
+
+   **Difficulties:** 
+
+   Because we cannot perform a real-time monitoring over variables, we currently just provided a user interface for checking whether the operated address is valid.
 
 
 
@@ -179,13 +196,13 @@ RUNNING > SLEEPING > IDLE > ZOMBIE > WAITING > STOPPED
 
 #### 1) Overall Implementation ideas:
 
-MemStat implementation overall idea:
+`MemStat` implementation overall idea:
 
 All the process and its status is stored as file in dir: `/proc` , what we have to do is to iterate over this directory to get all process with each of its PID and then use the pid to access `"/proc/" + pid + "/status"` to get the status file of each process, and then find the information that has the key that we are looking for and record it and visualize it in the command line. Same for the memory info (stored in `"/proc/meminfo"`)
 
-LeakDetector implementation overall idea:
+`LeakDetector` implementation overall idea:
 
-We rewrite wrapper function for all memory related function (`malloc()`, `calloc()` , `realloc()`, `strdup()` , `free()`) and file related function (`open()` , `close()`) , For each allocation/open function rewrite, we record the  allocation/open action's related information and format it and write it in an output file, we also maintain a leak linked-list and insert it into the linked-list . For each memory/file resource release function rewrite, we also record the release action with its related information and format it and write it in an output file, we also delete it from the leak linked-list. After the test finished, the memory/file that allocated/opened but not freed/closed will still remain in the leak linked-list, so we can detect the leakage and output it as a mem_report.
+We rewrite wrapper function for all memory related function (`malloc()`, `calloc()` , `realloc()`, `strdup()` , `free()`) and file related function (`open()` , `close()`) , For each allocation/open function rewrite, we record the  allocation/open action's related information and format it and write it in an output file, we also maintain a leak linked-list and insert it into the linked-list . For each memory/file resource release function rewrite, we also record the release action with its related information and format it and then write it in an output file, we also delete it from the leak linked-list. After the test finished, the memory/file that allocated/opened but not freed/closed will still remain in the leak linked-list, so we can detect the leakage and output it as a memory report.
 
 
 
@@ -278,7 +295,7 @@ The `vmsize_per` represents the percentage of `vmsize` portion in`TOTAL_VM_SIZE`
 
 While the `vmrss_per` represents the percentage of `vmrss` portion in `MemInfo::m_total`
 
-Memory information is get and recorded in the following manner:
+Memory information is retrieved and recorded in the following manner:
 
 ```cpp
 void MemInfo::getCurMemInfo(){
@@ -317,9 +334,26 @@ It reaches `/proc/meminfo` to get the info and extract four keys: `MemTotal` , `
 
 At last, a terminal visualization is implemented, to make this real-time memory usage statistic be interpreted in a more elegant way:
 
-#TODO
+```cpp
+void displayHelp();
+void displayTitle();
+void displayEachItem(vector<processMemInfo> (*memStatFunc)(), int displayNum);
+void displayMemoryInfo(processMemInfo info);
 
+void setForeGoundColor(ForeGroundColor color);
+void setBackGroundColor(BackGroundColor color);
+void setFontBold();
+void setFlash();
+void resetDisplay();
 
+void clearScreen();
+void moveCursorLineHead();
+void showCursor();
+void hideCursor();
+void UpCursor(int up);
+```
+
+The above are the function implemented for display use. The name of the function explain itself.
 
 
 
@@ -327,7 +361,7 @@ At last, a terminal visualization is implemented, to make this real-time memory 
 
    We use `sortRegulation` and a switch statement to let the user decide which way of sorting should we present:
 
-   ```c
+   ```cpp
        if (!checkArgs(displayNum, sortRegulation)) return 0;
    
        vector<processMemInfo> (*memStatFunc)();
@@ -342,7 +376,7 @@ At last, a terminal visualization is implemented, to make this real-time memory 
 
    The specific method for each sort regulation:
 
-   ```c
+   ```cpp
    vector<processMemInfo> getMemStatByPid() {
        vector<processMemInfo> processMemInfoList = getAllMemStat();
        sort(processMemInfoList.begin(), processMemInfoList.end(), MemCmpPid);
@@ -370,7 +404,7 @@ At last, a terminal visualization is implemented, to make this real-time memory 
 
    The specific compare method for each sorting:
 
-   ```c
+   ```cpp
    /* Compare Function */
    bool MemCmpPid(const processMemInfo& a,const processMemInfo& b) {
        return a.pid < b.pid;
@@ -392,7 +426,7 @@ At last, a terminal visualization is implemented, to make this real-time memory 
 
    To clarify more on the state comparison, if two process are in the same state, it is ranked by pid , if not then it rank as the follow order:
 
-   ```
+   ```cpp
    RUNNING > SLEEPING > IDLE > ZOMBIE > WAITING > STOPPED
    ```
 
@@ -402,7 +436,7 @@ At last, a terminal visualization is implemented, to make this real-time memory 
 
 For example, for `malloc()` it is rewrite as the following:
 
-```c
+```cpp
 void * wrapper_malloc(unsigned int size, const char * file, unsigned int line) {
     void * ptr = malloc(size);
     if (ptr != NULL) {
@@ -414,7 +448,7 @@ void * wrapper_malloc(unsigned int size, const char * file, unsigned int line) {
 
 the `add_mem_info` function is like this:
 
-```c
+```cpp
 void add_mem_info(void * mem_ref, unsigned int size, const char * file, unsigned int line) {
     Mem_info mem_info;
     memset( &mem_info, 0, sizeof(mem_info) );
@@ -546,7 +580,7 @@ Also the record format is different:
 
 `Mem_leak` is defined as this kind of structure, it records the Mem_info of the leakage and the pointer to the next mem_leak:
 
-```c
+```cpp
 typedef struct _mem_leak {
     Mem_info mem_info;
     struct _mem_leak *next;
@@ -555,7 +589,7 @@ typedef struct _mem_leak {
 
 `Mem_Leak_info` is defined as the following :
 
-```c
+```cpp
 typedef struct _mem_leak_info {
     int num;
     unsigned int total_memory;
@@ -647,13 +681,201 @@ void file_report() {
 
 Thus, the expected goal is reached.
 
+6. **Made a file descriptor leak summary report:**
 
+   Same as ***5*.**  , we defined `File_leak` and `File_Leak_info` 
+
+   ```cpp
+   typedef struct _file_leak {
+       File_info file_info;
+       struct _file_leak *next;
+   } File_leak ;
+   
+   typedef struct _leak_info {
+       int num;
+       bool is_first;
+       pthread_mutex_t mutex;
+   } File_Leak_info ;e
+   ```
+
+   we also have `insert_leak` and `delete_leak` for file:
+
+   and a summary report display function `file_report` for file:
+
+   ```cpp
+   void insert_leak(File_info fd_info);
+   void delete_leak(int pos);
+   
+   void file_report();
+   ```
+
+7. **Display memory/file leakage real time detection statistic in terminal:**
+
+File implementation is almost the same as memory , so take memory as an example
+
+The key different function in the display is  `getAllMemLeak()`
+
+```cpp
+vector<Mem_info> getAllMemLeak(){
+    vector<Mem_info> memLeakList;
+    FILEPATHRECORD = string(getcwd(NULL, 0)) + "/Output";
+    DIR* dir = opendir(FILEPATHRECORD.c_str());
+    dirent* p = NULL;
+    string format = "_Mem.txt";
+    while((p = readdir(dir)) != NULL)
+    {
+        if(p->d_name[0] != '.')
+        {
+            string name = FILEPATHRECORD + "/" + string(p->d_name);
+            if(strstr(name.c_str(), format.c_str()) != NULL){
+
+                FILE *f = fopen(name.c_str(), "r");
+                if(f!=NULL) {
+                    int mode = 0;
+                    void *address;
+                    unsigned int size;
+                    string file_name;
+                    unsigned int line;
+                    time_t start;
+
+                    string str = "";
+                    char in[100];
+                    while (NULL != fgets(in, 99, f)) {
+                        if (in[0] == '\n')
+                            continue;
+                        str = in;
+                        if (str == "[Allocate Memory]\n") {
+                            mode = 1;
+                            continue;
+                        } else if (str == "[Free Memory]\n") {
+                            mode = -1;
+                            continue;
+                        } else if (str == "       Memory Leak Summary\n")
+                            break;
+                        str.erase(remove(str.begin(), str.end(), '\n'), str.end());
+                        if (str.size() > 7) {
+                            if (str.substr(0, 7) == "Address")
+                                address = (void *) (atoi(str.substr(11, 8).c_str()));
+                            else if (str.substr(0, 4) == "File") {
+                                file_name = str.substr(6);
+                            } else if (str.substr(0, 4) == "Line") {
+                                line = atoi(str.substr(6).c_str());
+                            } else if (str.substr(0, 4) == "Size") {
+                                size = atoi(str.substr(6).c_str());
+                            } else if (str.substr(0, 5) == "Start") {
+                                start = atol(str.substr(7).c_str());
+                                if (mode == 1) {
+                                    Mem_info mem_info;
+                                    memset(&mem_info, 0, sizeof(mem_info));
+                                    mem_info.address = address;
+                                    mem_info.size = size;
+                                    mem_info.file_name = file_name;
+                                    mem_info.line = line;
+                                    mem_info.start = start;
+                                    memLeakList.push_back(mem_info);
+                                } else if (mode == -1) {
+                                    int find = -1;
+                                    for (int i = 0; i < memLeakList.size(); i++) {
+                                        if (memLeakList[i].address == address) {
+                                            find = i;
+                                            break;
+                                        }
+                                    }
+                                    if (find > -1)
+                                        memLeakList.erase(memLeakList.begin() + find);
+                                }
+                            }
+                        }
+
+                    }
+                    fclose(f);
+                }
+            }
+        }
+    }
+    closedir(dir);
+
+    return memLeakList;
+}
+```
+
+The function mainly gets memory statistic output file's record and leak summary report to construct the content of visualization , it also contains three mode for sort the display result which is :
+
+```cpp
+vector<Mem_info> getMemLeakByName() {
+    vector<Mem_info> memLeakList = getAllMemLeak();
+    sort(memLeakList.begin(), memLeakList.end(), LeakCmpName);
+    return memLeakList;
+}
+
+vector<Mem_info> getMemLeakBySize() {
+    vector<Mem_info> memLeakList = getAllMemLeak();
+    sort(memLeakList.begin(), memLeakList.end(), LeakCmpSize);
+    return memLeakList;
+}
+
+vector<Mem_info> getMemLeakByTime() {
+    vector<Mem_info> memLeakList = getAllMemLeak();
+    sort(memLeakList.begin(), memLeakList.end(), LeakCmpTime);
+    return memLeakList;
+}
+```
+
+Each sort has its comparison function:
+
+```cpp
+bool LeakCmpName(const Mem_info& a,const Mem_info& b) {
+    return a.file_name < b.file_name;
+}
+
+bool LeakCmpSize(const Mem_info& a,const Mem_info& b) {
+    return a.size < b.size;
+}
+
+bool LeakCmpTime(const Mem_info& a,const Mem_info& b) {
+    return a.start < b.start;
+}
+```
+
+For the display part, it is using almost the same display technique used in `memStat` and have the following function:
+
+```cpp
+void displayHelpMemLeak();
+void displayTitleMemLeak();
+void displayEachMem(vector<Mem_info> (*memLeakFunc)(), int displayNum);
+void displayMemoryLeak(Mem_info leak, time_t second);
+```
+
+For the color warning, we have the following code:
+
+```cpp
+    if (second > LEAKDANGER) {
+        setFlash();
+        BGColor = BG_RED;
+    } else if (second > LEAKWARN) {
+        BGColor = BG_RED;
+    } else if (second > LEAKSAFE) {
+        BGColor = BG_YELLOW;
+    } else {
+        BGColor = BG_GREEN;
+    }
+```
+
+The parameter `LEAKSAFE` `LEAKWARN` and  `LEAKDANGER` serves as the border line for each display color or form.
+
+```cpp
+const float LEAKSAFE = 10;
+const float LEAKWARN = 20;
+const float LEAKDANGER = 30;
+```
 
 
 
 ## Future Direction
 
-
+1. Detect and alert use on uninitialized memory.
+2. Detect and alert read and write operations on memory after it has been freed.
+3. Detect and alert use on memory beyond the allocated size.
 
 
 
@@ -661,24 +883,18 @@ Thus, the expected goal is reached.
 
 #### 1)Main techniques we learnt in the project
 
-
-
-
-
-
+​      We learnt how to code in cpp and in ubuntu environment comfortably, we learnt an efficient way to detect memory/file leakage and realize the importance of doing so. We learn the way to visualize our result in linux terminal. We apply what we learnt in the CS302 OS courses such as memory , mutex lock, file and by doing the project we gain a deeper understanding over these area.
 
 #### 2)Experience of teamwork
 
-
-
-
+​      In this project, all of our teammates collaborate closely. The work division is clear and we have a lot of discussion sessions to fully exchange our ideas over the implementation. We also uses github as a collaboration and version control tool. Everybody is happy and proud of the project progress we've made
 
 
 
 ## Division of labor
 
-**Weibao Fu's work:**
+**Weibao Fu's work:**  Implement code of Leak detector
 
-**Lan Lu's work:**
+**Lan Lu's work:**  Implement visualization part and part of memStat
 
-**Ziyue Zhou's work:**
+**Ziyue Zhou's work:**  Implement code of memStat  and report writing
