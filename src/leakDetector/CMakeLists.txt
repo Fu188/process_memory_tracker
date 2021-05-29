@@ -11,4 +11,7 @@ add_executable(${PROJECT_NAME}
         displayFileLeak.cpp
         main.cpp
         ../memStat/display.cpp
+        ../memStat/Mem.cpp
+        ../memStat/processMem.cpp
+        ../memStat/utils.cpp
         )

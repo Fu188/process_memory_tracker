@@ -9,14 +9,9 @@
 # include "displayFileLeak.hpp"
 # include "FileLeakDetector.hpp"
 # include "../memStat/display.hpp"
+#include "../memStat/utils.hpp"
 
 using namespace std;
-
-void clearAndExit(int signum) {
-    clearScreen();
-    showCursor();
-    exit(signum);
-}
 
 int main(int argc, char *argv[]) {
     /* register exception function */

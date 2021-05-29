@@ -205,7 +205,7 @@ void mem_clear() {
 
 vector<Mem_info> getAllMemLeak(){
     vector<Mem_info> memLeakList;
-    FILEPATHRECORD = string(getcwd(NULL, 0)) + "/Output";
+    FILEPATHRECORD = "Output";
     DIR* dir = opendir(FILEPATHRECORD.c_str());
     dirent* p = NULL;
     string format = "_Mem.txt";
