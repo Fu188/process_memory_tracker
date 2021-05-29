@@ -4,6 +4,7 @@
 
 # include "processMem.hpp"
 # include "display.hpp"
+# include "Mem.hpp"
 
 const float MEMSAFE = 10;
 const float MEMWARN = 20;
@@ -44,9 +45,13 @@ void displayHelp(){
 }
 
 void displayTitle(){
+    moveCursorLineHead();
     BackGroundColor BGColor = BG_BLACK;
     ForeGroundColor FGColor = FG_WHITE;
-    moveCursorLineHead();
+    printf("%21s%23ld%21s%22ld\n",
+           "Total Memory:",MemInfo::m_total,"Used Memory:",MemInfo::m_used);
+    printf("%21s%23ld%21s%22ld\n",
+           "Cached Memory:",MemInfo::m_cached,"Free Memory:",MemInfo::m_free);
     setFontBold();
     setBackGroundColor(BGColor);
     setForeGoundColor(FGColor);

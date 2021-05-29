@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     while(true) {
         displayTitle();
         displayEachItem(memStatFunc, displayNum);
-        UpCursor(displayNum+1);
+        UpCursor(displayNum+3);
         sleep(1);
     }
 
