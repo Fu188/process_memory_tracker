@@ -82,8 +82,9 @@ void displayMemoryInfo(processMemInfo info){
     setForeGoundColor(FGColor);
     moveCursorLineHead();
 
+    info.name[10] = '\0';
     printf ("%7d%15s%15s%15d%15d%10f%10f",
-            info.pid, info.name.c_str(), ProcessStateString[info.state].c_str(), 
+            info.pid, info.name.c_str(), ProcessStateString[info.state].c_str(),
             info.vmsize, info.vmrss, info.vmsize_per, info.vmrss_per);
     resetDisplay();
     printf("\n");

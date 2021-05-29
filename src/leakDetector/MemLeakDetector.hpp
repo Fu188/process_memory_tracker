@@ -2,6 +2,10 @@
 # define MEMLEAKDETECTOR_H
 
 # include <string>
+#include <vector>
+#include <time.h>
+
+using namespace std;
 
 # define MUTEX_CREATE(handle)       pthread_mutex_init(&(handle), NULL)
 # define MUTEX_LOCK(handle)         pthread_mutex_lock(&(handle))
@@ -13,6 +17,7 @@ typedef struct _mem_info {
     unsigned int size;
     std::string file_name;
     unsigned int line;
+    time_t start;
 } Mem_info ;
 
 typedef struct _mem_leak {
@@ -36,5 +41,14 @@ unsigned int delete_leak(unsigned int pos);
 
 void mem_report();
 void mem_clear();
+
+vector<Mem_info> getAllMemLeak();
+vector<Mem_info> getMemLeakByName();
+vector<Mem_info> getMemLeakBySize();
+vector<Mem_info> getMemLeakByTime();
+
+bool LeakCmpName(const Mem_info& a,const Mem_info& b);
+bool LeakCmpSize(const Mem_info& a,const Mem_info& b);
+bool LeakCmpTime(const Mem_info& a,const Mem_info& b);
 
 # endif

@@ -2,6 +2,10 @@
 # define FILELEAKDETECTOR_H
 
 # include <string>
+# include <vector>
+#include <time.h>
+
+using namespace std;
 
 # define MUTEX_CREATE(handle)       pthread_mutex_init(&(handle), NULL)
 # define MUTEX_LOCK(handle)         pthread_mutex_lock(&(handle))
@@ -12,6 +16,7 @@ typedef struct _file_info {
     int fd;
     std::string file_name;
     unsigned int line;
+    time_t start;
 } File_info ;
 
 typedef struct _file_leak {
@@ -32,5 +37,12 @@ void delete_leak(int pos);
 
 void file_report();
 void file_clear();
+
+vector<File_info> getAllFileLeak();
+vector<File_info> getFileLeakByName();
+vector<File_info> getFileLeakByTime();
+
+bool LeakCmpName(const File_info& a,const File_info& b);
+bool LeakCmpTime(const File_info& a,const File_info& b);
 
 # endif

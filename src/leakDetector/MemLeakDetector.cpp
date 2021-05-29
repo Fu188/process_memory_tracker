@@ -5,14 +5,20 @@
 # include <iostream>
 # include <unistd.h>
 # include <sys/stat.h>
+#include <vector>
+# include <cmath>
+# include <algorithm>
+# include <time.h>
+#include <dirent.h>
 
-# include "MemLeakDetector.hpp"
+#include "displayMemLeak.hpp"
 using namespace std;
 
 static Mem_leak * leak_start = NULL;
 static Mem_leak * leak_next = NULL;
 static Mem_Leak_info leak_info = {0};
 static string FILENAME;
+static string FILEPATHRECORD;
 
 void * wrapper_malloc(unsigned int size, const char * file, unsigned int line) {
     void * ptr = malloc(size);
@@ -63,11 +69,13 @@ void add_mem_info(void * mem_ref, unsigned int size, const char * file, unsigned
     mem_info.size = size;
     mem_info.file_name = file;
     mem_info.line = line;
+    mem_info.start = time(NULL);
     if (!leak_info.is_first) {
         leak_info.is_first ++;
         MUTEX_CREATE(leak_info.mutex);
         FILENAME = string(strtok((char *)(string(file)).c_str(), "."));
-        string DIRNAME = string(getcwd(NULL, 0)) + "/Output/";
+//        string DIRNAME = string(getcwd(NULL, 0)) + "/Output/";
+        string DIRNAME = "../leakDetector/Output/";
         if (access(DIRNAME.c_str(), F_OK)) {
             mkdir(DIRNAME.c_str(),ALLPERMS);
         }
@@ -82,7 +90,7 @@ void add_mem_info(void * mem_ref, unsigned int size, const char * file, unsigned
 
     FILE *f = fopen(FILENAME.c_str(), "a");
     if (f!=NULL) {
-        fprintf(f, "[Allocate Memeory]\nFile: %s\nLine: %d\nSize: %zu bytes\n\n", file, line, size);
+        fprintf(f, "[Allocate Memory]\nAddress: 0x%8x\nFile: %s\nLine: %d\nSize: %zu\nStart: %lld\n\n", mem_ref, file, line, size, mem_info.start);
         fclose(f);
     }
 }
@@ -91,12 +99,14 @@ void remove_mem_info(void * mem_ref, const char * file, unsigned int line) {
     Mem_leak * mem_leak = leak_start;
     bool success = 0;
     unsigned int size;
+    time_t start = 0;
 
     MUTEX_LOCK(leak_info.mutex);
     for (unsigned int i = 0; mem_leak!=NULL; ++i) {
         if (mem_leak->mem_info.address == mem_ref) {
             size = delete_leak(i);
             success = 1;
+            start = mem_leak->mem_info.start;
             break;
         }
         mem_leak = mem_leak->next;
@@ -108,7 +118,7 @@ void remove_mem_info(void * mem_ref, const char * file, unsigned int line) {
     } else {
         FILE *f = fopen(FILENAME.c_str(), "a");
         if (f!=NULL) {
-            fprintf(f, "[Free Memeory]\nFile: %s\nLine: %d\nSize: %zu bytes\n\n", file, line, size);
+            fprintf(f, "[Free Memory]\nAddress: 0x%8x\nFile: %s\nLine: %d\nSize: %zu\nStart: %lld\n\n", mem_ref, file, line, size, start);
             fclose(f);
         }
     }
@@ -192,4 +202,121 @@ void mem_clear() {
 		leak_item = alloc_info;
 	}
 }
+
+vector<Mem_info> getAllMemLeak(){
+    vector<Mem_info> memLeakList;
+    FILEPATHRECORD = string(getcwd(NULL, 0)) + "/Output";
+    DIR* dir = opendir(FILEPATHRECORD.c_str());
+    dirent* p = NULL;
+    string format = "_Mem.txt";
+    while((p = readdir(dir)) != NULL)
+    {
+        if(p->d_name[0] != '.')
+        {
+            string name = FILEPATHRECORD + "/" + string(p->d_name);
+            if(strstr(name.c_str(), format.c_str()) != NULL){
+
+                FILE *f = fopen(name.c_str(), "r");
+                if(f!=NULL) {
+                    int mode = 0;
+                    void *address;
+                    unsigned int size;
+                    string file_name;
+                    unsigned int line;
+                    time_t start;
+
+                    string str = "";
+                    char in[100];
+                    while (NULL != fgets(in, 99, f)) {
+                        if (in[0] == '\n')
+                            continue;
+                        str = in;
+                        if (str == "[Allocate Memory]\n") {
+                            mode = 1;
+                            continue;
+                        } else if (str == "[Free Memory]\n") {
+                            mode = -1;
+                            continue;
+                        } else if (str == "       Memory Leak Summary\n")
+                            break;
+                        str.erase(remove(str.begin(), str.end(), '\n'), str.end());
+                        if (str.size() > 7) {
+                            if (str.substr(0, 7) == "Address")
+                                address = (void *) (atoi(str.substr(11, 8).c_str()));
+                            else if (str.substr(0, 4) == "File") {
+                                file_name = str.substr(6);
+                            } else if (str.substr(0, 4) == "Line") {
+                                line = atoi(str.substr(6).c_str());
+                            } else if (str.substr(0, 4) == "Size") {
+                                size = atoi(str.substr(6).c_str());
+                            } else if (str.substr(0, 5) == "Start") {
+                                start = atol(str.substr(7).c_str());
+                                if (mode == 1) {
+                                    Mem_info mem_info;
+                                    memset(&mem_info, 0, sizeof(mem_info));
+                                    mem_info.address = address;
+                                    mem_info.size = size;
+                                    mem_info.file_name = file_name;
+                                    mem_info.line = line;
+                                    mem_info.start = start;
+                                    memLeakList.push_back(mem_info);
+                                } else if (mode == -1) {
+                                    int find = -1;
+                                    for (int i = 0; i < memLeakList.size(); i++) {
+                                        if (memLeakList[i].address == address) {
+                                            find = i;
+                                            break;
+                                        }
+                                    }
+//                        for (vector<Mem_info>::iterator iter = memLeakList.begin(); iter != memLeakList.end(); iter++){
+//                            if((*iter).address == address)
+//                        }
+                                    if (find > -1)
+                                        memLeakList.erase(memLeakList.begin() + find);
+                                }
+                            }
+                        }
+
+                    }
+                    fclose(f);
+                }
+            }
+        }
+    }
+    closedir(dir);
+
+    return memLeakList;
+}
+
+bool LeakCmpName(const Mem_info& a,const Mem_info& b) {
+    return a.file_name < b.file_name;
+}
+
+bool LeakCmpSize(const Mem_info& a,const Mem_info& b) {
+    return a.size < b.size;
+}
+
+bool LeakCmpTime(const Mem_info& a,const Mem_info& b) {
+    return a.start < b.start;
+}
+
+vector<Mem_info> getMemLeakByName() {
+    vector<Mem_info> memLeakList = getAllMemLeak();
+    sort(memLeakList.begin(), memLeakList.end(), LeakCmpName);
+    return memLeakList;
+}
+
+vector<Mem_info> getMemLeakBySize() {
+    vector<Mem_info> memLeakList = getAllMemLeak();
+    sort(memLeakList.begin(), memLeakList.end(), LeakCmpSize);
+    return memLeakList;
+}
+
+vector<Mem_info> getMemLeakByTime() {
+    vector<Mem_info> memLeakList = getAllMemLeak();
+    sort(memLeakList.begin(), memLeakList.end(), LeakCmpTime);
+    return memLeakList;
+}
+
+
 

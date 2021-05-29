@@ -23,11 +23,11 @@ int main() {
         ptr[index]=malloc(32*index);
         sleep(2);
     }
-    close(p[2]);
+    close(p[1]);
     free(ptr[1]);
     sleep(2);
-    close(p[3]);
-    free(ptr[4]);
+    close(p[2]);
+    free(ptr[2]);
     sleep(2);
     mem_report();
     file_report();
