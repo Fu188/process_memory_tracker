@@ -229,7 +229,7 @@ void updateFileStat(){
                                     }
                                 }
                                 if (find > -1){
-                                    fileClosed.push_back(fileOpened[i]);
+                                    fileClosed.push_back(fileOpened[find]);
                                     fileOpened.erase(fileOpened.begin() + find);
                                 }
                             }
@@ -258,6 +258,10 @@ vector<Mem_info> getAllMemFreed(){
 }
 
 template<typename T> void checkAssignMem(T* address){
+    BackGroundColor BGColor = BG_GREEN;
+    ForeGroundColor FGColor = FG_BLACK;
+    setBackGroundColor(BGColor);
+    setForeGoundColor(FGColor);
     int size = sizeof(T); // sizeof(*address) is also ok
     Mem_info mem;
     int start = *((int *) &address);
@@ -268,8 +272,9 @@ template<typename T> void checkAssignMem(T* address){
         lower = *((int *)(&mem.address));
         upper = *((int *)(&mem.address)) + mem.size -1;
         if(lower<=start && upper >= start+size-1){
-            printf("%15s%20s%5s0x%08x\n","Memory", "Success","",address);
+            printf("%15s%20s%5s0x%08x","Memory", "Success","",address);
             resetDisplay();
+            printf("\n");
             return;
         }
     }
@@ -278,37 +283,46 @@ template<typename T> void checkAssignMem(T* address){
         lower = *((int *)&mem.address);
         upper = *((int *)&mem.address) + mem.size -1;
         if(lower<=start && upper >= start+size-1){
-            printf("%15s%20s%5s0x%08x\n","Memory", "Already Freed","",address);
+            printf("%15s%20s%5s0x%08x","Memory", "Already Freed","",address);
             resetDisplay();
+            printf("\n");
             return;
         }
     }
-    printf("%15s%20s%5s0x%08x\n","Memory", "Uninitialized","",address);
+    printf("%15s%20s%5s0x%08x","Memory", "Uninitialized","",address);
     resetDisplay();
+    printf("\n");
     return;
 }
 
 void checkAssignFile(int fd){
+    BackGroundColor BGColor = BG_GREEN;
+    ForeGroundColor FGColor = FG_BLACK;
+    setBackGroundColor(BGColor);
+    setForeGoundColor(FGColor);
     File_info file;
     updateFileStat();
     for(int i = 0; i < fileOpenedGlobal.size(); i++){
         file = fileOpenedGlobal[i];
         if(file.fd == fd){
-            printf("%15s%20s%15d\n","File", "Opened",fd);
+            printf("%15s%20s%15d","File", "Opened",fd);
             resetDisplay();
+            printf("\n");
             return;
         }
     }
     for(int i = 0; i < fileClosedGlobal.size(); i++){
         file = fileClosedGlobal[i];
         if(file.fd == fd){
-            printf("%15s%20s%15d\n","File", "Already Closed",fd);
+            printf("%15s%20s%15d","File", "Already Closed",fd);
             resetDisplay();
+            printf("\n");
             return;
         }
     }
-    printf("%15s%20s%15d\n","File", "not Accessed", fd);
+    printf("%15s%20s%15d","File", "Not Accessed", -1);
     resetDisplay();
+    printf("\n");
     return;
 }
 
@@ -320,8 +334,9 @@ int main(){
     setFontBold();
     setBackGroundColor(BGColor);
     setForeGoundColor(FGColor);
-    printf("%15s%20s%15s\n", "CLASS", "TYPE", "ADDRESS");
+    printf("%15s%20s%15s", "CLASS", "TYPE", "ADDRESS/FD");
     resetDisplay();
+    printf("\n");
     int index = 5;
     void* ptr[index];
     int p[index+1];

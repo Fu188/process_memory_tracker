@@ -8,5 +8,4 @@ add_executable(${PROJECT_NAME}
         checkAssign.cpp
         ../leakDetector/MemLeakDetector.cpp
         ../leakDetector/FileLeakDetector.cpp
-        ../memStat/display.cpp
         )
