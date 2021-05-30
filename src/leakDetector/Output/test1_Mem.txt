@@ -1,0 +1,69 @@
+[Allocate Memory]
+Address: 0xd1d9f1b0
+File: test1.cpp
+Line: 23
+Size: 128
+Start: 1622354594
+
+[Allocate Memory]
+Address: 0xd1d9f330
+File: test1.cpp
+Line: 23
+Size: 96
+Start: 1622354596
+
+[Allocate Memory]
+Address: 0xd1d9f440
+File: test1.cpp
+Line: 23
+Size: 64
+Start: 1622354598
+
+[Allocate Memory]
+Address: 0xd1d9eeb0
+File: test1.cpp
+Line: 23
+Size: 32
+Start: 1622354600
+
+[Allocate Memory]
+Address: 0xd1d9ee70
+File: test1.cpp
+Line: 23
+Size: 0
+Start: 1622354602
+
+[Free Memory]
+Address: 0xd1d9eeb0
+File: test1.cpp
+Line: 27
+Size: 32
+Start: 1622354600
+
+[Free Memory]
+Address: 0xd1d9f440
+File: test1.cpp
+Line: 30
+Size: 64
+Start: 1622354598
+
+       Memory Leak Summary
+-----------------------------------
+Leak Total Num: 3, Leak Total Size: 224 Bytes
+Max used: 320 Bytes, Once Max: 128 Bytes
+
+Address: 0xd1d9f1b0
+Size: 128 Bytes
+File Name: test1.cpp
+Line: 23
+-----------------------------------
+Address: 0xd1d9f330
+Size: 96 Bytes
+File Name: test1.cpp
+Line: 23
+-----------------------------------
+Address: 0xd1d9ee70
+Size: 0 Bytes
+File Name: test1.cpp
+Line: 23
+-----------------------------------

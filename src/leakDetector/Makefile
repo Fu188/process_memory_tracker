@@ -177,32 +177,194 @@ MemLeakDetector.cpp.s:
 	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/MemLeakDetector.cpp.s
 .PHONY : MemLeakDetector.cpp.s
 
-test_file.o: test_file.cpp.o
+displayFileLeak.o: displayFileLeak.cpp.o
 
-.PHONY : test_file.o
+.PHONY : displayFileLeak.o
 
 # target to build an object file
-test_file.cpp.o:
-	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/test_file.cpp.o
-.PHONY : test_file.cpp.o
+displayFileLeak.cpp.o:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/displayFileLeak.cpp.o
+.PHONY : displayFileLeak.cpp.o
 
-test_file.i: test_file.cpp.i
+displayFileLeak.i: displayFileLeak.cpp.i
 
-.PHONY : test_file.i
+.PHONY : displayFileLeak.i
 
 # target to preprocess a source file
-test_file.cpp.i:
-	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/test_file.cpp.i
-.PHONY : test_file.cpp.i
+displayFileLeak.cpp.i:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/displayFileLeak.cpp.i
+.PHONY : displayFileLeak.cpp.i
 
-test_file.s: test_file.cpp.s
+displayFileLeak.s: displayFileLeak.cpp.s
 
-.PHONY : test_file.s
+.PHONY : displayFileLeak.s
 
 # target to generate assembly for a file
-test_file.cpp.s:
-	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/test_file.cpp.s
-.PHONY : test_file.cpp.s
+displayFileLeak.cpp.s:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/displayFileLeak.cpp.s
+.PHONY : displayFileLeak.cpp.s
+
+displayMemLeak.o: displayMemLeak.cpp.o
+
+.PHONY : displayMemLeak.o
+
+# target to build an object file
+displayMemLeak.cpp.o:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/displayMemLeak.cpp.o
+.PHONY : displayMemLeak.cpp.o
+
+displayMemLeak.i: displayMemLeak.cpp.i
+
+.PHONY : displayMemLeak.i
+
+# target to preprocess a source file
+displayMemLeak.cpp.i:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/displayMemLeak.cpp.i
+.PHONY : displayMemLeak.cpp.i
+
+displayMemLeak.s: displayMemLeak.cpp.s
+
+.PHONY : displayMemLeak.s
+
+# target to generate assembly for a file
+displayMemLeak.cpp.s:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/displayMemLeak.cpp.s
+.PHONY : displayMemLeak.cpp.s
+
+home/fwb/process_memory_tracker/src/memStat/Mem.o: home/fwb/process_memory_tracker/src/memStat/Mem.cpp.o
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/Mem.o
+
+# target to build an object file
+home/fwb/process_memory_tracker/src/memStat/Mem.cpp.o:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/Mem.cpp.o
+.PHONY : home/fwb/process_memory_tracker/src/memStat/Mem.cpp.o
+
+home/fwb/process_memory_tracker/src/memStat/Mem.i: home/fwb/process_memory_tracker/src/memStat/Mem.cpp.i
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/Mem.i
+
+# target to preprocess a source file
+home/fwb/process_memory_tracker/src/memStat/Mem.cpp.i:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/Mem.cpp.i
+.PHONY : home/fwb/process_memory_tracker/src/memStat/Mem.cpp.i
+
+home/fwb/process_memory_tracker/src/memStat/Mem.s: home/fwb/process_memory_tracker/src/memStat/Mem.cpp.s
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/Mem.s
+
+# target to generate assembly for a file
+home/fwb/process_memory_tracker/src/memStat/Mem.cpp.s:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/Mem.cpp.s
+.PHONY : home/fwb/process_memory_tracker/src/memStat/Mem.cpp.s
+
+home/fwb/process_memory_tracker/src/memStat/display.o: home/fwb/process_memory_tracker/src/memStat/display.cpp.o
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/display.o
+
+# target to build an object file
+home/fwb/process_memory_tracker/src/memStat/display.cpp.o:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/display.cpp.o
+.PHONY : home/fwb/process_memory_tracker/src/memStat/display.cpp.o
+
+home/fwb/process_memory_tracker/src/memStat/display.i: home/fwb/process_memory_tracker/src/memStat/display.cpp.i
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/display.i
+
+# target to preprocess a source file
+home/fwb/process_memory_tracker/src/memStat/display.cpp.i:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/display.cpp.i
+.PHONY : home/fwb/process_memory_tracker/src/memStat/display.cpp.i
+
+home/fwb/process_memory_tracker/src/memStat/display.s: home/fwb/process_memory_tracker/src/memStat/display.cpp.s
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/display.s
+
+# target to generate assembly for a file
+home/fwb/process_memory_tracker/src/memStat/display.cpp.s:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/display.cpp.s
+.PHONY : home/fwb/process_memory_tracker/src/memStat/display.cpp.s
+
+home/fwb/process_memory_tracker/src/memStat/processMem.o: home/fwb/process_memory_tracker/src/memStat/processMem.cpp.o
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/processMem.o
+
+# target to build an object file
+home/fwb/process_memory_tracker/src/memStat/processMem.cpp.o:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/processMem.cpp.o
+.PHONY : home/fwb/process_memory_tracker/src/memStat/processMem.cpp.o
+
+home/fwb/process_memory_tracker/src/memStat/processMem.i: home/fwb/process_memory_tracker/src/memStat/processMem.cpp.i
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/processMem.i
+
+# target to preprocess a source file
+home/fwb/process_memory_tracker/src/memStat/processMem.cpp.i:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/processMem.cpp.i
+.PHONY : home/fwb/process_memory_tracker/src/memStat/processMem.cpp.i
+
+home/fwb/process_memory_tracker/src/memStat/processMem.s: home/fwb/process_memory_tracker/src/memStat/processMem.cpp.s
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/processMem.s
+
+# target to generate assembly for a file
+home/fwb/process_memory_tracker/src/memStat/processMem.cpp.s:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/processMem.cpp.s
+.PHONY : home/fwb/process_memory_tracker/src/memStat/processMem.cpp.s
+
+home/fwb/process_memory_tracker/src/memStat/utils.o: home/fwb/process_memory_tracker/src/memStat/utils.cpp.o
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/utils.o
+
+# target to build an object file
+home/fwb/process_memory_tracker/src/memStat/utils.cpp.o:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/utils.cpp.o
+.PHONY : home/fwb/process_memory_tracker/src/memStat/utils.cpp.o
+
+home/fwb/process_memory_tracker/src/memStat/utils.i: home/fwb/process_memory_tracker/src/memStat/utils.cpp.i
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/utils.i
+
+# target to preprocess a source file
+home/fwb/process_memory_tracker/src/memStat/utils.cpp.i:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/utils.cpp.i
+.PHONY : home/fwb/process_memory_tracker/src/memStat/utils.cpp.i
+
+home/fwb/process_memory_tracker/src/memStat/utils.s: home/fwb/process_memory_tracker/src/memStat/utils.cpp.s
+
+.PHONY : home/fwb/process_memory_tracker/src/memStat/utils.s
+
+# target to generate assembly for a file
+home/fwb/process_memory_tracker/src/memStat/utils.cpp.s:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/home/fwb/process_memory_tracker/src/memStat/utils.cpp.s
+.PHONY : home/fwb/process_memory_tracker/src/memStat/utils.cpp.s
+
+main.o: main.cpp.o
+
+.PHONY : main.o
+
+# target to build an object file
+main.cpp.o:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/main.cpp.o
+.PHONY : main.cpp.o
+
+main.i: main.cpp.i
+
+.PHONY : main.i
+
+# target to preprocess a source file
+main.cpp.i:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/main.cpp.i
+.PHONY : main.cpp.i
+
+main.s: main.cpp.s
+
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.cpp.s:
+	$(MAKE) -f CMakeFiles/leakDetector.dir/build.make CMakeFiles/leakDetector.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 # Help Target
 help:
@@ -219,9 +381,27 @@ help:
 	@echo "... MemLeakDetector.o"
 	@echo "... MemLeakDetector.i"
 	@echo "... MemLeakDetector.s"
-	@echo "... test_file.o"
-	@echo "... test_file.i"
-	@echo "... test_file.s"
+	@echo "... displayFileLeak.o"
+	@echo "... displayFileLeak.i"
+	@echo "... displayFileLeak.s"
+	@echo "... displayMemLeak.o"
+	@echo "... displayMemLeak.i"
+	@echo "... displayMemLeak.s"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/Mem.o"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/Mem.i"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/Mem.s"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/display.o"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/display.i"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/display.s"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/processMem.o"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/processMem.i"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/processMem.s"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/utils.o"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/utils.i"
+	@echo "... home/fwb/process_memory_tracker/src/memStat/utils.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 

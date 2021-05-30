@@ -1,0 +1,56 @@
+[Open File]
+File: checkAssign.cpp
+File Descriptor: 3
+Line: 346
+Start: 1622354880
+
+[Open File]
+File: checkAssign.cpp
+File Descriptor: 4
+Line: 346
+Start: 1622354880
+
+[Open File]
+File: checkAssign.cpp
+File Descriptor: 5
+Line: 346
+Start: 1622354880
+
+[Open File]
+File: checkAssign.cpp
+File Descriptor: 6
+Line: 346
+Start: 1622354880
+
+[Open File]
+File: checkAssign.cpp
+File Descriptor: 7
+Line: 346
+Start: 1622354880
+
+[Close File]
+File: checkAssign.cpp
+File Descriptor: 5
+Line: 353
+Start: 1622354880
+
+   File Descriptor Leak Summary
+-----------------------------------
+Leak total: 4
+
+File Descriptor: 3
+File Name: checkAssign.cpp
+Line: 346
+-----------------------------------
+File Descriptor: 4
+File Name: checkAssign.cpp
+Line: 346
+-----------------------------------
+File Descriptor: 6
+File Name: checkAssign.cpp
+Line: 346
+-----------------------------------
+File Descriptor: 7
+File Name: checkAssign.cpp
+Line: 346
+-----------------------------------

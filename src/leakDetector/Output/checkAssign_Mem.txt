@@ -1,0 +1,67 @@
+[Allocate Memory]
+Address: 0x9eabc2a0
+File: checkAssign.cpp
+Line: 345
+Size: 4
+Start: 1622354880
+
+[Allocate Memory]
+Address: 0x9eabc2c0
+File: checkAssign.cpp
+Line: 345
+Size: 4
+Start: 1622354880
+
+[Allocate Memory]
+Address: 0x9eabc2e0
+File: checkAssign.cpp
+Line: 345
+Size: 4
+Start: 1622354880
+
+[Allocate Memory]
+Address: 0x9eabc740
+File: checkAssign.cpp
+Line: 345
+Size: 4
+Start: 1622354880
+
+[Allocate Memory]
+Address: 0x9eabc800
+File: checkAssign.cpp
+Line: 345
+Size: 4
+Start: 1622354880
+
+[Free Memory]
+Address: 0x9eabc2e0
+File: checkAssign.cpp
+Line: 351
+Size: 4
+Start: 1622354880
+
+       Memory Leak Summary
+-----------------------------------
+Leak Total Num: 4, Leak Total Size: 16 Bytes
+Max used: 20 Bytes, Once Max: 4 Bytes
+
+Address: 0x9eabc2a0
+Size: 4 Bytes
+File Name: checkAssign.cpp
+Line: 345
+-----------------------------------
+Address: 0x9eabc2c0
+Size: 4 Bytes
+File Name: checkAssign.cpp
+Line: 345
+-----------------------------------
+Address: 0x9eabc740
+Size: 4 Bytes
+File Name: checkAssign.cpp
+Line: 345
+-----------------------------------
+Address: 0x9eabc800
+Size: 4 Bytes
+File Name: checkAssign.cpp
+Line: 345
+-----------------------------------

@@ -174,27 +174,37 @@
     Line: <The line that causes the leakage happens>
     ```
 
-	2. **Display memory/file leakage real time detection statistic in terminal:**
-	
-	   ![image-20210530131539853](Final_Report.assets/image-20210530131539853.png)
-	   
-	   It will track the file and track its memory allocation time. and file open time.
-	   
-	   And use different color to give out warning about whether the situation it is severe.
-	   
-	   It gives a real-time warning over the parameter `TIME`
-	   
-	   if    `TIME` < 10, it is considered as within the `LEAKSAFE` line  then the  row item appears as green
-	   
-	   if   20>`TIME` >10, it is considered as cross the `LEAKSAFE` line , then the row item appears as yellow
-	   
-	   if  30 > `TIME` >20,  it is considered as cross the `LEAKWARN` line , then the row item appears as red
-	   
-	    if   `TIME` >30,  it is considered as cross the `LEAKDANGER` line , then the row item appears as red and keeps flashing. (since it is dynamic, it cannot be shown in the report)
-	   
-	   
-	   
-	   
+    2. **Display memory/file leakage real time detection statistic in terminal:**
+
+       ![image-20210530140439174](Final_Report.assets/image-20210530140439174.png)
+
+       It will track the file and track its memory allocation time. and file open time.
+
+       And use different color to give out warning about whether the situation it is severe.
+
+       It gives a real-time warning over the parameter `TIME`
+
+       if    `TIME` < 10, it is considered as within the `LEAKSAFE` line  then the  row item appears as green
+
+       if   20>`TIME` >10, it is considered as cross the `LEAKSAFE` line , then the row item appears as yellow
+
+       if  30 > `TIME` >20,  it is considered as cross the `LEAKWARN` line , then the row item appears as red
+
+        if   `TIME` >30,  it is considered as cross the `LEAKDANGER` line , then the row item appears as red and keeps flashing. (since it is dynamic, it cannot be shown in the report)
+
+    3. **Check operations on uninitialized/already freed memory as well as closed/not accessed file:**![image-20210530141127642](Final_Report.assets/image-20210530141127642.png)
+
+       **CLASS**: The type(Memory or File) that it is checking
+
+       **TYPE**: The status of the checked class:
+
+       ​			*Uninitialized*: This chunk of memory/File has never been allocated/accessed before
+
+       ​            *Already* *Freed*: This chunk of memory/File was allocated/accessed before but already freed/closed
+
+       ​            *Success*: This chunk of memory/File is validly visited/accessed
+
+       **Address**: Relevant Address and FD 
 
 #### 3) Goals that are not implemented and its difficulties:
 

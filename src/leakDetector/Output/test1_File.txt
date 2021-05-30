@@ -1,0 +1,58 @@
+[Open File]
+File: test1.cpp
+File Descriptor: 3
+Line: 22
+Start: 1622354594
+
+[Open File]
+File: test1.cpp
+File Descriptor: 4
+Line: 22
+Start: 1622354596
+
+[Open File]
+File: test1.cpp
+File Descriptor: 5
+Line: 22
+Start: 1622354598
+
+[Open File]
+File: test1.cpp
+File Descriptor: 6
+Line: 22
+Start: 1622354600
+
+[Open File]
+File: test1.cpp
+File Descriptor: 7
+Line: 22
+Start: 1622354602
+
+[Close File]
+File: test1.cpp
+File Descriptor: 6
+Line: 26
+Start: 1622354600
+
+[Close File]
+File: test1.cpp
+File Descriptor: 5
+Line: 29
+Start: 1622354598
+
+   File Descriptor Leak Summary
+-----------------------------------
+Leak total: 3
+
+File Descriptor: 3
+File Name: test1.cpp
+Line: 22
+-----------------------------------
+File Descriptor: 4
+File Name: test1.cpp
+Line: 22
+-----------------------------------
+File Descriptor: 7
+File Name: test1.cpp
+Line: 22
+-----------------------------------
